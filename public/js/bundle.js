@@ -9,34 +9,32 @@
       this.container = this.shadowRoot.querySelector(".albz-the-fold");
     }
     static get observedAttributes() {
-      return ["title", "subtitle", "description", "button-text", "button-url", "button-target", "image-src"];
+      return ["title", "subtitle", "description", "linkedin-url", "github-url"];
     }
     connectedCallback() {
       this.render();
     }
     attributeChangedCallback(name, oldValue, newValue) {
-      if (oldValue !== newValue) {
-        if (name === "title")
-          this.title = newValue;
-        if (name === "subtitle")
-          this.subtitle = newValue;
-        if (name === "description")
-          this.description = newValue;
-        if (name === "button-text")
-          this.buttonText = newValue;
-        if (name === "button-url")
-          this.buttonUrl = newValue;
-        if (name === "image-src")
-          this.imageSrc = newValue;
-      }
+      if (name === "title")
+        this.title = newValue;
+      if (name === "subtitle")
+        this.subtitle = newValue;
+      if (name === "description")
+        this.description = newValue;
+      if (name === "linkedin-url")
+        this.linkedinUrl = newValue;
+      if (name === "github-url")
+        this.githubUrl = newValue;
     }
     render() {
       this.container.innerHTML = `
-            <img class="albz-the-fold__image" src="${this.imageSrc}" alt="Profile Image">
             <h2 class="albz-the-fold__title">${this.title}</h2>
             <h3 class="albz-the-fold__subtitle">${this.subtitle}</h3>
             <p class="albz-the-fold__description">${this.description}</p>
-            <a class="albz-the-fold__button" href="${this.buttonUrl}" target="${this.buttonTarget}">${this.buttonText}</a>
+            <div class="albz-the-fold__buttons">
+                <a class="albz-the-fold__linkedin" href="${this.linkedinUrl}" target="_blank">LinkedIn</a>
+                <a class="albz-the-fold__github" href="${this.githubUrl}" target="_blank">GitHub</a>
+            </div>
         `;
     }
     get styles() {
@@ -50,12 +48,7 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                height: 100vh;
-            }
-
-            .albz-the-fold__image {
-                max-width: 100%;
-                height: auto;
+                height: 70vh;
             }
 
             .albz-the-fold__title {
@@ -74,20 +67,26 @@
                 margin: 1rem 0;
             }
 
-            .albz-the-fold__button {
+            .albz-the-fold__buttons {
+                display: flex;
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+
+            .albz-the-fold__linkedin,
+            .albz-the-fold__github {
                 display: inline-block;
                 padding: 1rem 2rem;
-                background-color: #ff6600;
+                background-color: #0077B5; /* LinkedIn color */
                 color: #fff;
                 text-decoration: none;
                 border: none;
                 border-radius: 5px;
                 font-size: 1.2rem;
-                margin-top: 1rem;
             }
 
-            .albz-the-fold__button:hover {
-                background-color: #ff3300;
+            .albz-the-fold__github {
+                background-color: #333; /* GitHub color */
             }
         `;
     }

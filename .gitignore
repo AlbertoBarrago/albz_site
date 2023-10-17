@@ -169,3 +169,4 @@ dist
 .pnp.\*
 
 /.idea/vcs.xml
+/.idea/git_toolbox_prj.xml

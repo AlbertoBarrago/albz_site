@@ -1,12 +1,20 @@
 # albz
 
+Works in progress please be kind ^^
+
 To install dependencies:
 
 ```bash
 bun install
 ```
 
-To run:
+To install dependencies 
+
+```bash
+bun run build
+```
+
+To run for fun:
 
 ```bash
 bun run index.ts

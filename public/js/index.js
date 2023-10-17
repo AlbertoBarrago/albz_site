@@ -1,8 +1,8 @@
-import Above_the_fold from "./components/above_the_fold";
+import AlbzTheFold from "./components/albzTheFold.js";
 
 const app = {
     components: {
-        'above-the-fold': Above_the_fold
+        'albzTheFold': AlbzTheFold
     }
 };
 

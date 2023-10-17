@@ -1,37 +1,38 @@
-"use strict";
-(() => {
-  // public/js/components/albzTheFold.js
-  var AlbzTheFold = class extends HTMLElement {
+/**
+ * Represents a custom element for displaying above the fold content.
+ * AboveTheFold is a custom element for displaying above the fold content.
+ *
+ * @extends HTMLElement
+ */
+class AlbzTheFold extends HTMLElement {
     constructor() {
-      super();
-      this.attachShadow({ mode: "open" });
-      this.shadowRoot.innerHTML = `<style>${this.styles}</style><div class="albz-the-fold"></div>`;
-      this.container = this.shadowRoot.querySelector(".albz-the-fold");
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `<style>${this.styles}</style><div class="albz-the-fold"></div>`;
+        this.container = this.shadowRoot.querySelector('.albz-the-fold');
     }
+
     static get observedAttributes() {
-      return ["title", "subtitle", "description", "button-text", "button-url", "button-target", "image-src"];
+        return ['title', 'subtitle', 'description', 'button-text', 'button-url', 'button-target', 'image-src'];
     }
+
     connectedCallback() {
-      this.render();
+        this.render();
     }
+
     attributeChangedCallback(name, oldValue, newValue) {
-      if (oldValue !== newValue) {
-        if (name === "title")
-          this.title = newValue;
-        if (name === "subtitle")
-          this.subtitle = newValue;
-        if (name === "description")
-          this.description = newValue;
-        if (name === "button-text")
-          this.buttonText = newValue;
-        if (name === "button-url")
-          this.buttonUrl = newValue;
-        if (name === "image-src")
-          this.imageSrc = newValue;
-      }
+        if(oldValue !== newValue) {
+            if (name === 'title') this.title = newValue;
+            if (name ==='subtitle') this.subtitle = newValue;
+            if (name === 'description') this.description = newValue;
+            if (name === 'button-text') this.buttonText = newValue;
+            if (name === 'button-url') this.buttonUrl = newValue;
+            if (name === 'image-src') this.imageSrc = newValue;
+        }
     }
+
     render() {
-      this.container.innerHTML = `
+        this.container.innerHTML = `
             <img class="albz-the-fold__image" src="${this.imageSrc}" alt="Profile Image">
             <h2 class="albz-the-fold__title">${this.title}</h2>
             <h3 class="albz-the-fold__subtitle">${this.subtitle}</h3>
@@ -39,8 +40,9 @@
             <a class="albz-the-fold__button" href="${this.buttonUrl}" target="${this.buttonTarget}">${this.buttonText}</a>
         `;
     }
+
     get styles() {
-      return `
+        return `
             .albz-the-fold {
                 background-color: #222;
                 color: #fff;
@@ -91,15 +93,8 @@
             }
         `;
     }
-  };
-  customElements.define("albz-the-fold", AlbzTheFold);
-  var albzTheFold_default = AlbzTheFold;
+}
 
-  // public/js/index.js
-  var app = {
-    components: {
-      "albzTheFold": albzTheFold_default
-    }
-  };
-  var js_default = app;
-})();
+customElements.define('albz-the-fold', AlbzTheFold);
+export default AlbzTheFold;
+

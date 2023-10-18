@@ -17,6 +17,7 @@ class AlbzTheFold extends HTMLElement {
     }
 
     connectedCallback() {
+        //console.log('shadow DOM connected', this.shadowRoot)
         this.render();
     }
 

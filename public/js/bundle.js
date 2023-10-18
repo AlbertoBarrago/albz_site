@@ -15,16 +15,18 @@
       this.render();
     }
     attributeChangedCallback(name, oldValue, newValue) {
-      if (name === "title")
-        this.title = newValue;
-      if (name === "subtitle")
-        this.subtitle = newValue;
-      if (name === "description")
-        this.description = newValue;
-      if (name === "linkedin-url")
-        this.linkedinUrl = newValue;
-      if (name === "github-url")
-        this.githubUrl = newValue;
+      if (oldValue !== newValue) {
+        if (name === "title")
+          this.title = newValue;
+        if (name === "subtitle")
+          this.subtitle = newValue;
+        if (name === "description")
+          this.description = newValue;
+        if (name === "linkedin-url")
+          this.linkedinUrl = newValue;
+        if (name === "github-url")
+          this.githubUrl = newValue;
+      }
     }
     render() {
       this.container.innerHTML = `

@@ -4,10 +4,14 @@
   "type": "module",
   "scripts": {
     "build": "esbuild public/js/index.js --bundle --outfile=public/js/bundle.js",
-    "prettier": "prettier --write 'public/js/**/*.js'"
+    "prettier": "prettier --write 'public/js/**/*.js'",
+    "prepare": "husky install",
+    "test": "eslint 'public/js/components/*.js'"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "eslint": "^8.51.0",
+    "husky": "^8.0.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -18,10 +22,5 @@
     "express": "^4.18.2",
     "gulp": "^4.0.2",
     "prettier": "^3.0.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npx --no-install prettier --write 'public/js/**/*.js'"
-    }
   }
 }

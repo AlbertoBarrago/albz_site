@@ -99,7 +99,7 @@
   // public/js/index.js
   var app = {
     components: {
-      "albzTheFold": albzTheFold_default
+      albzTheFold: albzTheFold_default
     }
   };
   var js_default = app;

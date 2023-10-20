@@ -5,34 +5,34 @@
  * @extends HTMLElement
  */
 class AlbzTheFold extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.innerHTML = `<style>${this.styles}</style><div class="albz-the-fold"></div>`;
-        this.container = this.shadowRoot.querySelector('.albz-the-fold');
-    }
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.innerHTML = `<style>${this.styles}</style><div class="albz-the-fold"></div>`;
+    this.container = this.shadowRoot.querySelector('.albz-the-fold');
+  }
 
-    static get observedAttributes() {
-        return ['title', 'subtitle', 'description', 'linkedin-url', 'github-url'];
-    }
+  static get observedAttributes() {
+    return ['title', 'subtitle', 'description', 'linkedin-url', 'github-url'];
+  }
 
-    connectedCallback() {
-        //console.log('shadow DOM connected', this.shadowRoot)
-        this.render();
-    }
+  connectedCallback() {
+    //console.log('shadow DOM connected', this.shadowRoot)
+    this.render();
+  }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        if(oldValue !== newValue) {
-            if (name === 'title') this.title = newValue;
-            if (name === 'subtitle') this.subtitle = newValue;
-            if (name === 'description') this.description = newValue;
-            if (name === 'linkedin-url') this.linkedinUrl = newValue;
-            if (name === 'github-url') this.githubUrl = newValue;
-        }
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue !== newValue) {
+      if (name === 'title') this.title = newValue;
+      if (name === 'subtitle') this.subtitle = newValue;
+      if (name === 'description') this.description = newValue;
+      if (name === 'linkedin-url') this.linkedinUrl = newValue;
+      if (name === 'github-url') this.githubUrl = newValue;
     }
+  }
 
-    render() {
-        this.container.innerHTML = `
+  render() {
+    this.container.innerHTML = `
             <h2 class="albz-the-fold__title">${this.title}</h2>
             <h3 class="albz-the-fold__subtitle">${this.subtitle}</h3>
             <p class="albz-the-fold__description">${this.description}</p>
@@ -41,10 +41,10 @@ class AlbzTheFold extends HTMLElement {
                 <a class="albz-the-fold__github" href="${this.githubUrl}" target="_blank">GitHub</a>
             </div>
         `;
-    }
+  }
 
-    get styles() {
-        return `
+  get styles() {
+    return `
             .albz-the-fold {
                 background-color: #222;
                 color: #fff;
@@ -95,9 +95,8 @@ class AlbzTheFold extends HTMLElement {
                 background-color: #333; /* GitHub color */
             }
         `;
-    }
+  }
 }
 
 customElements.define('albz-the-fold', AlbzTheFold);
 export default AlbzTheFold;
-

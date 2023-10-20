@@ -1,8 +1,10 @@
-import AlbzTheFold from './components/albzTheFold.js';
+import AlbzFooter from './components/albzFooter.js';
+import AlbzTheFold from './components/albzFold.js';
 
 const app = {
   components: {
-    albzTheFold: AlbzTheFold,
+    albzCondom: AlbzFooter,
+    albzFold: AlbzTheFold,
   },
 };
 

@@ -1,6 +1,7 @@
 class ${componentName} extends HTMLElement {
     constructor() {
         super();
+        this.attachShadow({ mode: 'open' });
         // Your component initialization code here
     }
 
@@ -18,3 +19,4 @@ class ${componentName} extends HTMLElement {
 }
 
 customElements.define('${componentName}', ${componentName});
+export default ${componentName};

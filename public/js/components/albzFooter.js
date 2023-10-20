@@ -27,4 +27,5 @@ class AlbzFooter extends HTMLElement {
   render() {}
 }
 
-customElements.define('footer', AlbzFooter);
+customElements.define('albz-footer', AlbzFooter);
+export default AlbzFooter;

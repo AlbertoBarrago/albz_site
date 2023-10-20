@@ -3,6 +3,7 @@ import browserSync from 'browser-sync';
 import { exec } from 'child_process';
 import rename from 'gulp-rename';
 import template from 'gulp-template';
+import * as fs from "fs";
 
 const reload = browserSync.create().reload;
 
@@ -52,18 +53,48 @@ gulp.task('build', function (done) {
 });
 
 // Task to create a new web component
-gulp.task('create-component', function () {
+gulp.task('create-component', function (done) {
     const componentName = process.argv[4]; // Get the component name from the command line argument
 
     if (!componentName) {
         console.error('Please provide a component name using the --name flag.');
+        done(); // Signal task completion
         return;
     }
 
-    return gulp.src('templates/component-template.js')
-        .pipe(template({ componentName }))
+    // Define the source template file
+    const templateFile = 'templates/component-template.js';
+
+    // Use gulp-template to replace placeholders in the template with the component name
+    gulp.src(templateFile)
+        .pipe(template({ componentName })) // Use the component name as a template variable
         .pipe(rename(`${componentName}.js`))
         .pipe(gulp.dest(`${publicDir}/js/components`));
+
+    // Add the export statement to 'index.js' with the new component name
+    const appFile = `${publicDir}/js/index.js`; // Updated file path to 'index.js'
+    const exportStatement = `import ${componentName} from './components/${componentName}.js';\n`;
+
+    fs.readFile(appFile, 'utf8', function (err, data) {
+        if (err) {
+            console.error('Error reading index.js file.');
+            done();
+            return;
+        }
+
+        // This made me crazy but now works
+        const componentsPosition = data.indexOf('components: {') + 'components: {'.length;
+        const updatedAppContent =
+            data.slice(0, componentsPosition) +
+            `\n    ${componentName.charAt(0).toLowerCase() + componentName.slice(1)}: ${componentName},` +
+            data.slice(componentsPosition);
+
+        const contentToPrepend = exportStatement + updatedAppContent;
+
+        fs.writeFileSync(appFile, contentToPrepend);
+
+        done();
+    });
 });
 
 // Initialize BrowserSync and watch for changes

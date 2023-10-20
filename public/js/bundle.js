@@ -12,7 +12,6 @@
       return ["title", "subtitle", "description", "linkedin-url", "github-url"];
     }
     connectedCallback() {
-      console.log("shadow DOM connected", this.shadowRoot);
       this.render();
     }
     attributeChangedCallback(name, oldValue, newValue) {

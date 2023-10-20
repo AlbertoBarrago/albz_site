@@ -12,7 +12,9 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "browser-sync": "^2.29.3",
     "esbuild": "^0.19.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "gulp": "^4.0.2"
   }
 }

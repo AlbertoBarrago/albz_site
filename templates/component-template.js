@@ -26,5 +26,5 @@ class ${componentName} extends HTMLElement {
     }
 }
 
-customElements.define('${componentName}', ${componentName});
+customElements.define('albz-${componentName.charAt(0).toLowerCase() + componentName.slice(1)}', ${componentName});
 export default ${componentName};

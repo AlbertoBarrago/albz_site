@@ -105,8 +105,8 @@ gulp.task('create-component', function (done) {
         .pipe(gulp.dest(componentDir));
 
     // Add the export statement to 'index.js' with the new component name
-    const appFile = `${srcDir}/js/index.js`; // Updated file path to 'index.js'
-    const exportStatement = `import ${componentName} from '../../components/${componentName.charAt(0).toLowerCase() + componentName.slice(1)}.js';\n`;
+    const appFile = `${srcDir}/index.js`; // Updated file path to 'index.js'
+    const exportStatement = `import ${componentName} from '../components/${componentName.charAt(0).toLowerCase() + componentName.slice(1)}.js';\n`;
 
     fs.readFile(appFile, 'utf8', function (err, data) {
         if (err) {
@@ -135,16 +135,19 @@ gulp.task('remove-component', function (done) {
     const filePath = `${componentDir}/${filename}.js`;
 
     // Delete the file from the components folder
-    del.deleteAsync([filePath]).then(function () {
+    del.deleteAsync([filePath], { force: true, allowEmpty: true }).then(function () {
         console.log(`Deleted file: ${filename}.js`);
+        console.log(`Deleted path of file: ${filePath}`);
+        const compDir = "../components/";
+        const appContent = fs.readFileSync(appjsDir, 'utf8');
+        const importStatement = `import ${filename} from '${compDir}${filename.charAt(0).toLowerCase() + filename.slice(1)}.js';`;
+        console.log('import statement', importStatement);
+        const objectProperty = `${filename.charAt(0).toLowerCase() + filename.slice(1)}: ${filename},`;
+        const updatedAppContent = appContent.replace(importStatement, '').replace(objectProperty, '');
 
-        // Update the target file (app.js)
-        gulp.src(appjsDir)
-            .pipe(replace(`import ${filename} from '${componentDir}/${filename}.js';`, ''))
-            .pipe(replace(`    ${filename}: ${filename},`, ''))
-            .pipe(gulp.dest('.'));
+        fs.writeFileSync(appjsDir, updatedAppContent, 'utf8');
 
-        console.log(`Updated ${targetFile}`);
+        console.log(`Updated ${appjsDir}`);
         done();
     });
 

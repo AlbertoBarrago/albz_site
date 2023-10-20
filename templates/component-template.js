@@ -1,3 +1,11 @@
+/*
+* This template is used by the gulpfile generator to generate the Web Component inside
+* the js folder called components
+* PLEASE DO NOT EDIT
+*
+* author: Alberto Barrago
+*/
+
 class ${componentName} extends HTMLElement {
     constructor() {
         super();

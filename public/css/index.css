@@ -1,3 +1,10 @@
-html, body {
-    background: #222222 !important;
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #222222;
+}
+
+albz-footer {
+    margin-top: auto;
 }

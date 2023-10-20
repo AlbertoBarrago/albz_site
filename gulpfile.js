@@ -9,36 +9,60 @@ const reload = browserSync.create().reload;
 
 /**
  * Represents a source object.
- * @typedef {Object} SourceObject
+ * @type {Object} SourceObject
  * @property {string} js - The path to JavaScript files.
  * @property {string} components - The path to component JavaScript files.
  * @property {string} html - The path to HTML files.
  * @property {Object} npm - The npm commands.
  * @property {string} npm.build - The npm build command.
+ *
  */
 const src = {
     js: 'public/js/*.js',
     components: 'public/js/components/*.js',
     html: 'public/*.html',
+    css: 'public/css/*.css',
     npm: {
         build: 'npm run build',
     }
 };
-
+/**
+ * The directory path for publicly accessible files.
+ *
+ * @type {string}
+ * @default './public'
+ */
 const publicDir = './public';
 
-// Define a task to watch and reload JavaScript files
+/**
+ * Watch for changes in js and update browser
+ *
+ */
 gulp.task('js', function () {
     return gulp.src(src.js)
         .pipe(reload({ stream: true }));
 });
 
+/**
+ * Watch for changes in html and update browser
+ */
 gulp.task('html', function () {
     return gulp.src(src.html)
         .pipe(browserSync.reload({ stream: true }));
 });
 
-// Define a task to run 'npm run build' and reload when build is complete
+/**
+ * Watch for changes in css and update browser
+ */
+gulp.task('css', function () {
+    return gulp.src(src.css)
+        .pipe(browserSync.reload({ stream: true }));
+})
+
+/**
+ * Trough Npm exec Build js file to commonJs inside index.js
+ * @property {string} done - Async function
+ */
 gulp.task('build', function (done) {
     exec(src.npm.build, function (error, stdout, stderr) {
         console.log(stdout);
@@ -52,7 +76,11 @@ gulp.task('build', function (done) {
     });
 });
 
-// Task to create a new web component
+/**
+ * Create Component and add exports
+ * @param {string} name - The name of the component.
+ * @return {Promise} A promise that resolves when the component is created and exported.
+ */
 gulp.task('create-component', function (done) {
     const componentName = process.argv[4]; // Get the component name from the command line argument
 
@@ -97,7 +125,10 @@ gulp.task('create-component', function (done) {
     });
 });
 
-// Initialize BrowserSync and watch for changes
+/**
+ * Launches the serve and watches
+ * @param {string} done Async function
+ */
 gulp.task('serve', function (done) {
     exec(src.npm.build, function (error, stdout, stderr) {
         console.log('build executed successfully');
@@ -110,13 +141,13 @@ gulp.task('serve', function (done) {
         });
 
         gulp.watch(src.html, gulp.series('html'))
+        gulp.watch(src.css, gulp.series('css'))
         gulp.watch(src.js, gulp.series('js'));
         gulp.watch(src.components, gulp.series('build'));
 
         done(error);
     });
-
-
 });
+
 
 gulp.task('default', gulp.series('serve'));

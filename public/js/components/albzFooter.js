@@ -7,7 +7,7 @@ class AlbzFooter extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['copyright', 'description'];
+    return ['copyright', 'description', 'version'];
   }
 
   connectedCallback() {
@@ -34,9 +34,7 @@ class AlbzFooter extends HTMLElement {
   get styles() {
     return `
            .albz-footer {
-            display:flex;
-            justify-content:center;
-            color: white;
+              text-align: center;
            }
         `;
   }

@@ -1,6 +1,6 @@
 {
   "name": "albz",
-  "module": "index.ts",
+  "module": "index_.ts",
   "type": "module",
   "scripts": {
     "build": "esbuild src/index.js --bundle --outfile=src/js/bundle.js",

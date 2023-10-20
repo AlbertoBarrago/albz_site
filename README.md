@@ -20,12 +20,6 @@ To install dependencies
 bun run build
 ```
 
-To run for fun:
-
-```bash
-bun run index.ts
-```
-
 To run for gulp:
 
 ```bash

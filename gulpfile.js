@@ -1,13 +1,17 @@
 import gulp from 'gulp';
 import browserSync from 'browser-sync';
 import { exec } from 'child_process';
+import rename from 'gulp-rename';
+import template from 'gulp-template';
 
 const reload = browserSync.create().reload;
+
 
 // Define the source and destination paths
 const src = {
     js: 'public/js/*.js',
     components: 'public/js/components/*.js',
+    html: 'public/*.html'
 };
 
 const publicDir = './public';
@@ -18,36 +22,51 @@ gulp.task('js', function () {
         .pipe(reload({ stream: true }));
 });
 
-// Define a task to run 'npm run build' on component file changes
+gulp.task('html', function () {
+    return gulp.src(src.html)
+        .pipe(browserSync.reload({ stream: true }));
+});
+
+// Define a task to run 'npm run build' and reload when build is complete
 gulp.task('build', function (done) {
     exec('npm run build', function (error, stdout, stderr) {
         console.log(stdout);
-        console.log('Build finished successfully 🎈')
         console.error(stderr);
 
         if (!error) {
-            // Trigger BrowserSync reload upon successful build
             browserSync.reload();
         }
 
-        done(error)
+        done(error);
     });
+});
+
+// Task to create a new web component
+gulp.task('create-component', function () {
+    const componentName = process.argv[4]; // Get the component name from the command line argument
+
+    if (!componentName) {
+        console.error('Please provide a component name using the --name flag.');
+        return;
+    }
+
+    return gulp.src('templates/component-template.js')
+        .pipe(template({ componentName }))
+        .pipe(rename(`${componentName}.js`))
+        .pipe(gulp.dest(`${publicDir}/js/components`));
 });
 
 // Initialize BrowserSync and watch for changes
 gulp.task('serve', function () {
     browserSync.init({
         server: {
-            baseDir: publicDir, // Use the variable for the root directory
-        }
+            baseDir: publicDir,
+        },
     });
 
-    // Watch JavaScript files
+    gulp.watch(src.html, gulp.series('html'))
     gulp.watch(src.js, gulp.series('js'));
-
-    // Watch component files and trigger the build task
     gulp.watch(src.components, gulp.series('build'));
 });
 
-// Create a default task that starts the development server
 gulp.task('default', gulp.series('serve'));

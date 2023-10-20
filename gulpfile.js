@@ -7,11 +7,22 @@ import template from 'gulp-template';
 const reload = browserSync.create().reload;
 
 
-// Define the source and destination paths
+/**
+ * Represents a source object.
+ * @typedef {Object} SourceObject
+ * @property {string} js - The path to JavaScript files.
+ * @property {string} components - The path to component JavaScript files.
+ * @property {string} html - The path to HTML files.
+ * @property {Object} npm - The npm commands.
+ * @property {string} npm.build - The npm build command.
+ */
 const src = {
     js: 'public/js/*.js',
     components: 'public/js/components/*.js',
-    html: 'public/*.html'
+    html: 'public/*.html',
+    npm: {
+        build: 'npm run build',
+    }
 };
 
 const publicDir = './public';
@@ -29,7 +40,7 @@ gulp.task('html', function () {
 
 // Define a task to run 'npm run build' and reload when build is complete
 gulp.task('build', function (done) {
-    exec('npm run build', function (error, stdout, stderr) {
+    exec(src.npm.build, function (error, stdout, stderr) {
         console.log(stdout);
         console.error(stderr);
 
@@ -57,16 +68,25 @@ gulp.task('create-component', function () {
 });
 
 // Initialize BrowserSync and watch for changes
-gulp.task('serve', function () {
-    browserSync.init({
-        server: {
-            baseDir: publicDir,
-        },
+gulp.task('serve', function (done) {
+    exec(src.npm.build, function (error, stdout, stderr) {
+        console.log('build executed successfully');
+        console.error(stderr);
+
+        browserSync.init({
+            server: {
+                baseDir: publicDir,
+            },
+        });
+
+        gulp.watch(src.html, gulp.series('html'))
+        gulp.watch(src.js, gulp.series('js'));
+        gulp.watch(src.components, gulp.series('build'));
+
+        done(error);
     });
 
-    gulp.watch(src.html, gulp.series('html'))
-    gulp.watch(src.js, gulp.series('js'));
-    gulp.watch(src.components, gulp.series('build'));
+
 });
 
 gulp.task('default', gulp.series('serve'));

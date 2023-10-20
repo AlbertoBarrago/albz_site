@@ -1,6 +1,9 @@
 # albz
 
-Works in progress please be kind ^^
+In this demo you can work with hot reload powered by the large Gulpfile.
+Husky controls your commits and prettier takes on the role of control formatter.
+
+_Web Componentes Rules_
 
 ### Demo 
 [https://albz-site.surge.sh/](https://albz-site.surge.sh)

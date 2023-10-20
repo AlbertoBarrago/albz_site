@@ -171,4 +171,4 @@ dist
 /.idea/vcs.xml
 /.idea/git_toolbox_prj.xml
 /.idea/inspectionProfiles/Project_Default.xml
-/public/js/bundle.js
+/src/js/bundle.js

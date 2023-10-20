@@ -4,6 +4,8 @@ import { exec } from 'child_process';
 import rename from 'gulp-rename';
 import template from 'gulp-template';
 import * as fs from "fs";
+import * as del from "del";
+import replace from "gulp-replace";
 
 const reload = browserSync.create().reload;
 
@@ -18,10 +20,10 @@ const reload = browserSync.create().reload;
  *
  */
 const src = {
-    js: 'public/js/*.js',
-    components: 'public/js/components/*.js',
-    html: 'public/*.html',
-    css: 'public/css/*.css',
+    js: 'src/js/*.js',
+    components: 'components/*.js',
+    html: 'src/*.html',
+    css: 'src/css/*.css',
     npm: {
         build: 'npm run build',
     }
@@ -33,6 +35,9 @@ const src = {
  * @default './public'
  */
 const publicDir = './public';
+const srcDir = './src'
+const componentDir = './components'
+const appjsDir = './src/index.js'
 
 /**
  * Watch for changes in js and update browser
@@ -96,12 +101,12 @@ gulp.task('create-component', function (done) {
     // Use gulp-template to replace placeholders in the template with the component name
     gulp.src(templateFile)
         .pipe(template({ componentName })) // Use the component name as a template variable
-        .pipe(rename(`${componentName}.js`))
-        .pipe(gulp.dest(`${publicDir}/js/components`));
+        .pipe(rename(`${componentName.charAt(0).toLowerCase() + componentName.slice(1)}.js`))
+        .pipe(gulp.dest(componentDir));
 
     // Add the export statement to 'index.js' with the new component name
-    const appFile = `${publicDir}/js/index.js`; // Updated file path to 'index.js'
-    const exportStatement = `import ${componentName} from './components/${componentName}.js';\n`;
+    const appFile = `${srcDir}/js/index.js`; // Updated file path to 'index.js'
+    const exportStatement = `import ${componentName} from '../../components/${componentName.charAt(0).toLowerCase() + componentName.slice(1)}.js';\n`;
 
     fs.readFile(appFile, 'utf8', function (err, data) {
         if (err) {
@@ -125,6 +130,26 @@ gulp.task('create-component', function (done) {
     });
 });
 
+gulp.task('remove-component', function (done) {
+    const filename = process.argv[4];
+    const filePath = `${componentDir}/${filename}.js`;
+
+    // Delete the file from the components folder
+    del.deleteAsync([filePath]).then(function () {
+        console.log(`Deleted file: ${filename}.js`);
+
+        // Update the target file (app.js)
+        gulp.src(appjsDir)
+            .pipe(replace(`import ${filename} from '${componentDir}/${filename}.js';`, ''))
+            .pipe(replace(`    ${filename}: ${filename},`, ''))
+            .pipe(gulp.dest('.'));
+
+        console.log(`Updated ${targetFile}`);
+        done();
+    });
+
+})
+
 /**
  * Launches the serve and watches
  * @param {string} done Async function
@@ -136,7 +161,7 @@ gulp.task('serve', function (done) {
 
         browserSync.init({
             server: {
-                baseDir: publicDir,
+                baseDir: srcDir,
             },
         });
 

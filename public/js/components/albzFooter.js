@@ -19,7 +19,7 @@ class AlbzFooter extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    console.log('attributeChanged', name)
+    console.log('attributeChanged', name);
     if (oldValue !== newValue) {
       this[name] = newValue;
     }

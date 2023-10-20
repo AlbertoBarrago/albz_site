@@ -26,4 +26,16 @@ To run for fun:
 bun run index.ts
 ```
 
+To run for gulp:
+
+```bash
+gulp server 
+```
+
+To create a WebComponent and inject inside index.js 
+
+```bash
+gulp create-component --name COMPONENT_NAME
+```
+
 This project was created using `bun init` in bun v1.0.0. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.

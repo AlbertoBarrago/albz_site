@@ -38,7 +38,6 @@ class AlbzFooter extends HTMLElement {
             justify-content:center;
             color: white;
            }
-       
         `;
   }
 }

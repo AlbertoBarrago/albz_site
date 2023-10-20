@@ -1,11 +1,14 @@
 import gulp from 'gulp';
 import browserSync from 'browser-sync';
 import { exec } from 'child_process';
-import rename from 'gulp-rename';
 import template from 'gulp-template';
 import * as fs from "fs";
 import * as del from "del";
-import replace from "gulp-replace";
+import htmlmin from 'gulp-htmlmin';
+import cleanCSS from 'gulp-clean-css';
+import concat from 'gulp-concat';
+import terser from 'gulp-terser';
+import rename from 'gulp-rename';
 
 const reload = browserSync.create().reload;
 
@@ -130,6 +133,9 @@ gulp.task('create-component', function (done) {
     });
 });
 
+/**
+ * Remove components by argv --name
+ */
 gulp.task('remove-component', function (done) {
     const filename = process.argv[4];
     const filePath = `${componentDir}/${filename}.js`;
@@ -141,7 +147,6 @@ gulp.task('remove-component', function (done) {
         const compDir = "../components/";
         const appContent = fs.readFileSync(appjsDir, 'utf8');
         const importStatement = `import ${filename} from '${compDir}${filename.charAt(0).toLowerCase() + filename.slice(1)}.js';`;
-        console.log('import statement', importStatement);
         const objectProperty = `${filename.charAt(0).toLowerCase() + filename.slice(1)}: ${filename},`;
         const updatedAppContent = appContent.replace(importStatement, '').replace(objectProperty, '');
 
@@ -177,5 +182,24 @@ gulp.task('serve', function (done) {
     });
 });
 
+gulp.task('dist', function (done) {
+    // Clean the dist folder if it exists, and recreate it
+    del.deleteAsync(['dist'],{ force: true, allowEmpty: true }).then(function () {
+        gulp.src('src/*.html')
+            .pipe(htmlmin({ collapseWhitespace: true }))
+            .pipe(gulp.dest('dist'));
+
+        gulp.src('src/css/*.css')
+            .pipe(cleanCSS())
+            .pipe(gulp.dest('dist/css'));
+
+        gulp.src('src/js/*.js')
+            .pipe(concat('bundle.js'))
+            .pipe(terser())
+            .pipe(gulp.dest('dist/js'));
+
+        done();
+    });
+});
 
 gulp.task('default', gulp.series('serve'));

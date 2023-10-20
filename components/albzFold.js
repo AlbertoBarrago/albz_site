@@ -5,42 +5,19 @@
  * @extends HTMLElement
  */
 class AlbzFold extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot.innerHTML = `<style>${this.styles}</style><div class="albz-fold"></div>`;
-    this.container = this.shadowRoot.querySelector('.albz-fold');
-  }
-
-  static get observedAttributes() {
-    return ['title', 'subtitle', 'description', 'linkedin-url', 'github-url'];
-  }
-
-  connectedCallback() {
-    //console.log('shadow DOM connected', this.shadowRoot)
-    this.render();
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue !== newValue) {
-      this[name] = newValue;
+    constructor() {
+        super();
+        this.attachShadow({mode: 'open'});
+        this.shadowRoot.innerHTML = `<style>${this.styles}</style><div class="albz-fold"></div>`;
+        this.container = this.shadowRoot.querySelector('.albz-fold');
     }
-  }
 
-  render() {
-    this.container.innerHTML = `
-            <h2 class="albz-fold__title">${this.title}</h2>
-            <h3 class="albz-fold__subtitle">${this.subtitle}</h3>
-            <p class="albz-fold__description">${this.description}</p>
-            <div class="albz-fold__buttons">
-                <a class="albz-fold__linkedin" href="${this.linkedinUrl}" target="_blank">LinkedIn</a>
-                <a class="albz-fold__github" href="${this.githubUrl}" target="_blank">GitHub</a>
-            </div>
-        `;
-  }
+    static get observedAttributes() {
+        return ['title', 'subtitle', 'description', 'linkedin-user', 'github-user'];
+    }
 
-  get styles() {
-    return `
+    get styles() {
+        return `
             .albz-fold {
                 background-color: #222;
                 color: #fff;
@@ -91,7 +68,47 @@ class AlbzFold extends HTMLElement {
                 background-color: #333; /* GitHub color */
             }
         `;
-  }
+    }
+
+    connectedCallback() {
+        this.render();
+
+        const linkedinLink = this.shadowRoot.getElementById('linkedin');
+        const githubLink = this.shadowRoot.getElementById('github');
+
+        linkedinLink.addEventListener('click', () => {
+            const username = this.getAttribute('linkedin-user');
+            window.open(`https://www.linkedin.com/in/${username}`, '_blank');
+        });
+
+        githubLink.addEventListener('click', () => {
+            const username = this.getAttribute('github-user');
+            window.open(`https://github.com/${username}`, '_blank');
+        });
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (oldValue !== newValue) {
+            this[name] = newValue;
+        }
+    }
+
+    render() {
+        this.container.innerHTML = `
+            <h2 class="albz-fold__title">${this.title}</h2>
+            <h3 class="albz-fold__subtitle">${this.subtitle}</h3>
+            <p class="albz-fold__description">${this.description}</p>
+            <div class="albz-fold__buttons">
+                <a class="albz-fold__linkedin" id="linkedin" href="#" target="_blank">
+                  LinkedIn
+                </a>
+                  
+                <a class="albz-fold__github" id="github" href="#" target="_blank">
+                    Github
+                </a>
+            </div>
+        `;
+    }
 }
 
 customElements.define('albz-fold', AlbzFold);

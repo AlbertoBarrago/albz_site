@@ -19,7 +19,6 @@ class AlbzFooter extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    console.log('attributeChanged', name);
     if (oldValue !== newValue) {
       this[name] = newValue;
     }
@@ -35,6 +34,7 @@ class AlbzFooter extends HTMLElement {
     return `
            .albz-footer {
               text-align: center;
+              color:white;
            }
         `;
   }

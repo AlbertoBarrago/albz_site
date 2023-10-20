@@ -6,7 +6,6 @@ import template from 'gulp-template';
 
 const reload = browserSync.create().reload;
 
-
 /**
  * Represents a source object.
  * @typedef {Object} SourceObject

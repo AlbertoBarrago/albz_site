@@ -4,12 +4,12 @@
  *
  * @extends HTMLElement
  */
-class AlbzTheFold extends HTMLElement {
+class AlbzFold extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.shadowRoot.innerHTML = `<style>${this.styles}</style><div class="albz-the-fold"></div>`;
-    this.container = this.shadowRoot.querySelector('.albz-the-fold');
+    this.shadowRoot.innerHTML = `<style>${this.styles}</style><div class="albz-fold"></div>`;
+    this.container = this.shadowRoot.querySelector('.albz-fold');
   }
 
   static get observedAttributes() {
@@ -29,19 +29,19 @@ class AlbzTheFold extends HTMLElement {
 
   render() {
     this.container.innerHTML = `
-            <h2 class="albz-the-fold__title">${this.title}</h2>
-            <h3 class="albz-the-fold__subtitle">${this.subtitle}</h3>
-            <p class="albz-the-fold__description">${this.description}</p>
-            <div class="albz-the-fold__buttons">
-                <a class="albz-the-fold__linkedin" href="${this.linkedinUrl}" target="_blank">LinkedIn</a>
-                <a class="albz-the-fold__github" href="${this.githubUrl}" target="_blank">GitHub</a>
+            <h2 class="albz-fold__title">${this.title}</h2>
+            <h3 class="albz-fold__subtitle">${this.subtitle}</h3>
+            <p class="albz-fold__description">${this.description}</p>
+            <div class="albz-fold__buttons">
+                <a class="albz-fold__linkedin" href="${this.linkedinUrl}" target="_blank">LinkedIn</a>
+                <a class="albz-fold__github" href="${this.githubUrl}" target="_blank">GitHub</a>
             </div>
         `;
   }
 
   get styles() {
     return `
-            .albz-the-fold {
+            .albz-fold {
                 background-color: #222;
                 color: #fff;
                 padding: 2rem;
@@ -53,30 +53,30 @@ class AlbzTheFold extends HTMLElement {
                 height: 70vh;
             }
 
-            .albz-the-fold__title {
+            .albz-fold__title {
                 font-size: 2.5rem;
                 margin: 0;
             }
 
-            .albz-the-fold__subtitle {
+            .albz-fold__subtitle {
                 font-size: 1.5rem;
                 margin: 0;
                 margin-top: 0.5rem;
             }
 
-            .albz-the-fold__description {
+            .albz-fold__description {
                 font-size: 1.2rem;
                 margin: 1rem 0;
             }
 
-            .albz-the-fold__buttons {
+            .albz-fold__buttons {
                 display: flex;
                 gap: 1rem;
                 margin-top: 1rem;
             }
 
-            .albz-the-fold__linkedin,
-            .albz-the-fold__github {
+            .albz-fold__linkedin,
+            .albz-fold__github {
                 display: inline-block;
                 padding: 1rem 2rem;
                 background-color: #0077B5; /* LinkedIn color */
@@ -87,12 +87,12 @@ class AlbzTheFold extends HTMLElement {
                 font-size: 1.2rem;
             }
 
-            .albz-the-fold__github {
+            .albz-fold__github {
                 background-color: #333; /* GitHub color */
             }
         `;
   }
 }
 
-customElements.define('albz-the-fold', AlbzTheFold);
-export default AlbzTheFold;
+customElements.define('albz-fold', AlbzFold);
+export default AlbzFold;

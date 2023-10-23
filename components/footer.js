@@ -1,4 +1,4 @@
-class AlbzFooter extends HTMLElement {
+class Footer extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -32,7 +32,7 @@ class AlbzFooter extends HTMLElement {
 
   get styles() {
     return `
-           .albz-footer {
+          .albz-footer {
               text-align: center;
               color:white;
            }
@@ -40,5 +40,5 @@ class AlbzFooter extends HTMLElement {
   }
 }
 
-customElements.define('albz-footer', AlbzFooter);
-export default AlbzFooter;
+customElements.define('albz-footer', Footer);
+export default Footer;

@@ -3,6 +3,8 @@
 * the js folder called components
 * PLEASE DO NOT EDIT
 *
+* Once is created you can delete the commment
+*
 * @Author: Alberto Barrago
 */
 

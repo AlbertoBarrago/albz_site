@@ -4,7 +4,7 @@
  *
  * @extends HTMLElement
  */
-class AlbzFold extends HTMLElement {
+class AboveTheFold extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
@@ -111,5 +111,5 @@ class AlbzFold extends HTMLElement {
     }
 }
 
-customElements.define('albz-fold', AlbzFold);
-export default AlbzFold;
+customElements.define('albz-fold', AboveTheFold);
+export default AboveTheFold;

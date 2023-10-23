@@ -1,6 +1,6 @@
 import gulp from 'gulp';
 import browserSync from 'browser-sync';
-import { exec } from 'child_process';
+import {exec} from 'child_process';
 import template from 'gulp-template';
 import * as fs from "fs";
 import * as del from "del";
@@ -48,7 +48,7 @@ const appjsDir = './src/index.js'
  */
 gulp.task('js', function () {
     return gulp.src(src.js)
-        .pipe(reload({ stream: true }));
+        .pipe(reload({stream: true}));
 });
 
 /**
@@ -56,7 +56,7 @@ gulp.task('js', function () {
  */
 gulp.task('html', function () {
     return gulp.src(src.html)
-        .pipe(browserSync.reload({ stream: true }));
+        .pipe(browserSync.reload({stream: true}));
 });
 
 /**
@@ -64,7 +64,7 @@ gulp.task('html', function () {
  */
 gulp.task('css', function () {
     return gulp.src(src.css)
-        .pipe(browserSync.reload({ stream: true }));
+        .pipe(browserSync.reload({stream: true}));
 })
 
 /**
@@ -103,7 +103,7 @@ gulp.task('create-component', function (done) {
 
     // Use gulp-template to replace placeholders in the template with the component name
     gulp.src(templateFile)
-        .pipe(template({ componentName })) // Use the component name as a template variable
+        .pipe(template({componentName})) // Use the component name as a template variable
         .pipe(rename(`${componentName.charAt(0).toLowerCase() + componentName.slice(1)}.js`))
         .pipe(gulp.dest(componentDir));
 
@@ -141,7 +141,7 @@ gulp.task('remove-component', function (done) {
     const filePath = `${componentDir}/${filename}.js`;
 
     // Delete the file from the components folder
-    del.deleteAsync([filePath], { force: true, allowEmpty: true }).then(function () {
+    del.deleteAsync([filePath], {force: true, allowEmpty: true}).then(function () {
         console.log(`Deleted file: ${filename}.js`);
         console.log(`Deleted path of file: ${filePath}`);
         const compDir = "../components/";
@@ -184,9 +184,9 @@ gulp.task('serve', function (done) {
 
 gulp.task('dist', function (done) {
     // Clean the dist folder if it exists, and recreate it
-    del.deleteAsync(['dist'],{ force: true, allowEmpty: true }).then(function () {
+    del.deleteAsync(['dist'], {force: true, allowEmpty: true}).then(function () {
         gulp.src('src/*.html')
-            .pipe(htmlmin({ collapseWhitespace: true }))
+            .pipe(htmlmin({collapseWhitespace: true}))
             .pipe(gulp.dest('dist'));
 
         gulp.src('src/css/*.css')

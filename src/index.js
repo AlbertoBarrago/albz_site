@@ -1,9 +1,9 @@
-import AlbzFooter from '../components/albzFooter.js';
-import AlbzTheFold from '../components/albzFold.js';
+import Footer from '../components/footer.js';
+import AlbzTheFold from '../components/aboveTheFold.js';
 
 const app = {
   components: {
-    albzFooter: AlbzFooter,
+    albzFooter: Footer,
     albzFold: AlbzTheFold,
   },
 };

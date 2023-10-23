@@ -1,9 +1,9 @@
 # albz
 
-In this demo you can work with hot reload powered by the large Gulpfile.
+In this demo you can work with hot reload powered by Gulpfile.
 Husky controls your commits and prettier takes on the role of control formatter.
 
-_Web Componentes Rules_
+works in progress, be patient... 
 
 ### Demo 
 [https://albz-site.surge.sh/](https://albz-site.surge.sh)

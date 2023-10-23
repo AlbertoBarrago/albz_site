@@ -10,16 +10,16 @@ const home = `
                   description="alBz's footer">
      </albz-footer>
  </div>
-`
+`;
 
 const about = `
     Ciao sono la pagina about
-`
+`;
 
 const pages = {
-    home,
-    about
-}
+  home,
+  about,
+};
 
 /**
  * @description This variable represents different routes and their corresponding functions.
@@ -28,15 +28,15 @@ const pages = {
  * @property {Function} '/about' Renders the about page.
  */
 const routes = {
-    '/': () => {
-        // Render the home page
-        const appContainer = document.querySelector("#app");
-        appContainer.innerHTML = pages.home;
-    },
-    '/about': () => {
-        const appContainer = document.querySelector("#app");
-        appContainer.innerHTML = pages.about;
-    },
+  '/': () => {
+    // Render the home page
+    const appContainer = document.querySelector('#app');
+    appContainer.innerHTML = pages.home;
+  },
+  '/about': () => {
+    const appContainer = document.querySelector('#app');
+    appContainer.innerHTML = pages.about;
+  },
 };
 
 /**
@@ -46,12 +46,12 @@ const routes = {
  * @return {string} - The updated path.
  */
 function handleBasePath(path) {
-    console.log('path: ' + path);
-    if(path.includes('/albz/dist/index.html')) {
-        return path.replace('/albz/dist/index.html', '/')
-    }
-    console.log('path-revised', path);
-    return path.replace('/albz/dist', '');
+  console.log('path: ' + path);
+  if (path.includes('/albz/dist/index.html')) {
+    return path.replace('/albz/dist/index.html', '/');
+  }
+  console.log('path-revised', path);
+  return path.replace('/albz/dist', '');
 }
 
 /**
@@ -60,10 +60,10 @@ function handleBasePath(path) {
  * @returns {void}
  */
 function router() {
-    let path = handleBasePath(window.location.pathname);
-    const routeHandler = routes[path] || notFound;
+  let path = handleBasePath(window.location.pathname);
+  const routeHandler = routes[path] || notFound;
 
-    routeHandler();
+  routeHandler();
 }
 
 /**
@@ -72,13 +72,10 @@ function router() {
  * @return {void}
  */
 function notFound() {
-    const appContainer = document.querySelector("#app");
-    appContainer.innerHTML = '<p>Page not found</p>';
+  const appContainer = document.querySelector('#app');
+  appContainer.innerHTML = '<p>Page not found</p>';
 }
 
-
 (function initRoute() {
-    document.addEventListener('DOMContentLoaded', router)
+  document.addEventListener('DOMContentLoaded', router);
 })();
-
-
